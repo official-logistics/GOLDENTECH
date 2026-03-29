@@ -913,30 +913,29 @@ const REGIONS = [
    BOOKING DATA — รอบรถ มีนาคม 2569
 ══════════════════════════════════════════ */
 const MARCH = {
-  28:{am:'a',pm:'l',w:'เสาร์'},
-  29:{am:'l',pm:'a',w:'อาทิตย์'},30:{am:'a',pm:'a',w:'จันทร์'},
-  31:{am:'f',pm:'l',w:'อังคาร'}
+30:{am:'a',pm:'a',w:'จันทร์'},
+  31:{am:'l',pm:'l',w:'อังคาร'}
 };
 
 /* ══════════════════════════════════════════
    BOOKING DATA — รอบรถ เมษายน 2569
 ══════════════════════════════════════════ */
 const APRIL = {
-1:{am:'l',pm:'a',w:'พุธ'},2:{am:'l',pm:'a',w:'พฤหัสบดี'},
+1:{am:'a',pm:'a',w:'พุธ'},2:{am:'l',pm:'a',w:'พฤหัสบดี'},
 3:{am:'a',pm:'a',w:'ศุกร์'},4:{am:'l',pm:'a',w:'เสาร์'},
 5:{am:'a',pm:'l',w:'อาทิตย์'},6:{am:'a',pm:'a',w:'จันทร์'},
 7:{am:'l',pm:'a',w:'อังคาร'},8:{am:'a',pm:'l',w:'พุธ'},
 9:{am:'a',pm:'a',w:'พฤหัสบดี'},10:{am:'l',pm:'a',w:'ศุกร์'},
-11:{am:'a',pm:'a',w:'เสาร์'},12:{am:'a',pm:'a',w:'อาทิตย์'},
-13:{am:'a',pm:'a',w:'จันทร์'},14:{am:'a',pm:'a',w:'อังคาร'},
-15:{am:'a',pm:'a',w:'พุธ'},16:{am:'a',pm:'a',w:'พฤหัสบดี'},
-17:{am:'a',pm:'a',w:'ศุกร์'},18:{am:'a',pm:'a',w:'เสาร์'},
-19:{am:'a',pm:'a',w:'อาทิตย์'},20:{am:'a',pm:'a',w:'จันทร์'},
-21:{am:'a',pm:'a',w:'อังคาร'},22:{am:'a',pm:'a',w:'พุธ'},
-23:{am:'a',pm:'a',w:'พฤหัสบดี'},24:{am:'a',pm:'a',w:'ศุกร์'},
-25:{am:'a',pm:'a',w:'เสาร์'},26:{am:'a',pm:'a',w:'อาทิตย์'},
-27:{am:'a',pm:'a',w:'จันทร์'},28:{am:'a',pm:'a',w:'อังคาร'},
-29:{am:'a',pm:'a',w:'พุธ'},30:{am:'a',pm:'a',w:'พฤหัสบดี'},
+11:{am:'a',pm:'a',w:'เสาร์'},12:{am:'l',pm:'l',w:'อาทิตย์'},
+13:{am:'a',pm:'l',w:'จันทร์'},14:{am:'a',pm:'a',w:'อังคาร'},
+15:{am:'l',pm:'a',w:'พุธ'},16:{am:'a',pm:'l',w:'พฤหัสบดี'},
+17:{am:'f',pm:'a',w:'ศุกร์'},18:{am:'a',pm:'l',w:'เสาร์'},
+19:{am:'l',pm:'a',w:'อาทิตย์'},20:{am:'a',pm:'a',w:'จันทร์'},
+21:{am:'l',pm:'l',w:'อังคาร'},22:{am:'a',pm:'a',w:'พุธ'},
+23:{am:'l',pm:'l',w:'พฤหัสบดี'},24:{am:'a',pm:'a',w:'ศุกร์'},
+25:{am:'l',pm:'l',w:'เสาร์'},26:{am:'a',pm:'a',w:'อาทิตย์'},
+27:{am:'l',pm:'l',w:'จันทร์'},28:{am:'a',pm:'a',w:'อังคาร'},
+29:{am:'l',pm:'l',w:'พุธ'},30:{am:'a',pm:'a',w:'พฤหัสบดี'}
 };
 
 /* ══════════════════════════════════════════
@@ -991,7 +990,7 @@ function buildCards(month = 'march') {
     const bc = hasAv ? 'avail-badge open' : allF ? 'avail-badge full' : 'avail-badge lim';
     const bt = hasAv ? 'มีรอบว่าง' : allF ? 'เต็มทั้งวัน' : 'เหลือน้อย';
     const slot = (p, s) => s === 'f'
-      ? `<button class="slot-btn fl" disabled>
+      ? `<button class="slot-btn fl" disabled onclick="pickSlot(this,${d},'${p}','${v.w}')">
            <span class="slot-period">${p === 'am' ? 'รอบเช้า' : 'รอบบ่าย'}</span>
            <span class="slot-time">${p === 'am' ? '09:00–12:00' : '13:00–17:00'}</span>
            <span class="slot-tag">เต็ม</span>
@@ -1037,6 +1036,10 @@ function switchMonth(dir) {
   /* Update button states */
   document.getElementById('prevBtn').disabled = currentMonth === 0;
   document.getElementById('nextBtn').disabled = currentMonth === 1;
+
+  const marchTotal = Object.values(MARCH).reduce((n, v) => n + (v.am !== 'f' ? 1 : 0) + (v.pm !== 'f' ? 1 : 0), 0);
+  const aprilTotal = Object.values(APRIL).reduce((n, v) => n + (v.am !== 'f' ? 1 : 0) + (v.pm !== 'f' ? 1 : 0), 0);
+  document.getElementById('monthMeta').textContent = (currentMonth === 0 ? marchTotal : aprilTotal) + ' รอบว่าง';
   
   resetSel();
 }
@@ -1048,8 +1051,9 @@ function pickSlot(btn, day, period, w) {
   if (selBtn) selBtn.classList.remove('selected');
   btn.classList.add('selected');
   selBtn = btn; selDay = day; selPeriod = period; selW = w;
+  const monthNames = [SEL_MN, APRIL_MN];
   document.getElementById('stickyText').textContent =
-    day + ' มี.ค. · ' + (period === 'am' ? 'รอบเช้า 09:00–12:00' : 'รอบบ่าย 13:00–17:00');
+    day + ' ' + monthNames[currentMonth] + ' · ' + (period === 'am' ? 'รอบเช้า 09:00–12:00' : 'รอบบ่าย 13:00–17:00');
   document.getElementById('stickyText').classList.remove('empty');
   document.getElementById('stickyCta').disabled = false;
   setStep(2);
@@ -1068,8 +1072,9 @@ function resetSel() {
 ══════════════════════════════════════════ */
 function openModal() {
   if (!selDay) return;
+  const monthNames = [SEL_MN, APRIL_MN];
   document.getElementById('chipDate').textContent =
-    selDay + ' ' + SEL_MN + ' (วัน' + selW + ')';
+    selDay + ' ' + monthNames[currentMonth] + ' (วัน' + selW + ')';
   document.getElementById('chipTime').textContent =
     selPeriod === 'am' ? 'รอบเช้า: 09:00–12:00 น.' : 'รอบบ่าย: 13:00–17:00 น.';
   document.getElementById('modal').classList.add('show');
@@ -1131,7 +1136,8 @@ async function submitForm() {
   const now  = new Date();
   const mmdd = String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
   const ref  = 'GDT-' + mmdd + '-' + Date.now().toString(36).slice(-4).toUpperCase();
-  const dateText = selDay + ' ' + SEL_MN + ' (วัน' + selW + ')';
+  const monthNames = [SEL_MN, APRIL_MN];
+  const dateText = selDay + ' ' + monthNames[currentMonth] + ' (วัน' + selW + ')';
   const timeText = selPeriod === 'am' ? 'รอบเช้า: 09:00–12:00 น.' : 'รอบบ่าย: 13:00–17:00 น.';
   const ts   = now.toLocaleString('th-TH', {timeZone: 'Asia/Bangkok'});
 
@@ -1250,8 +1256,9 @@ document.addEventListener('keydown', e => {
    INIT
 ══════════════════════════════════════════ */
 (function init() {
-  const total = Object.values(MARCH).reduce((n, v) => n + (v.am !== 'f' ? 1 : 0) + (v.pm !== 'f' ? 1 : 0), 0);
-  document.getElementById('monthMeta').textContent = total + ' รอบว่าง';
+  const marchTotal = Object.values(MARCH).reduce((n, v) => n + (v.am !== 'f' ? 1 : 0) + (v.pm !== 'f' ? 1 : 0), 0);
+  const aprilTotal = Object.values(APRIL).reduce((n, v) => n + (v.am !== 'f' ? 1 : 0) + (v.pm !== 'f' ? 1 : 0), 0);
+  document.getElementById('monthMeta').textContent = marchTotal + ' รอบว่าง';
   buildCards('march');
   buildCards('april');
   setStep(1);
