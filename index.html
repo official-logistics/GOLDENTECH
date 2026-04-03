@@ -976,7 +976,11 @@ function getFullAddr() {
   const s = selSub.value;
   const z = inpZip.value;
   const d = document.getElementById('inp-addr').value.trim();
-  if (p && a && s && z && d) return d + ' ตำบล' + s + ' ' + a + ' จังหวัด' + p + ' ' + z;
+  if (p && a && s && z && d) {
+    const subPrefix = p === 'กรุงเทพมหานคร' ? 'แขวง' : 'ตำบล';
+    const provPrefix = p === 'กรุงเทพมหานคร' ? '' : 'จังหวัด';
+    return d + ' ' + subPrefix + s + ' ' + a + ' ' + provPrefix + p + ' ' + z;
+  }
   return '';
 }
 
