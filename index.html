@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3c6e">
 <meta name="description" content="PickupVault ระบบนัดรับสินค้า ได้รับการรับรองมาตรฐาน ปลอดภัยด้วย Escrow">
-<title>PickupVault – ระบบนัดรับสินค้า</title>
+<title>ระบบกำหนดเข้ารับสินค้า PickupVault</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -429,11 +429,11 @@ body{
 
   <!-- STEP BAR -->
   <div class="step-bar" id="stepBar">
-    <div class="step-item"><div class="step-num active" id="s1">1</div><span class="step-lbl active" id="sl1">เลือกรอบ</span></div>
+    <div class="step-item"><div class="step-num active" id="s1">1</div><span class="step-lbl active" id="sl1">เลือกวันเวลา</span></div>
     <div class="step-line" id="line1"></div>
     <div class="step-item"><div class="step-num" id="s2">2</div><span class="step-lbl" id="sl2">กรอกข้อมูล</span></div>
     <div class="step-line" id="line2"></div>
-    <div class="step-item"><div class="step-num" id="s3">3</div><span class="step-lbl" id="sl3">เสร็จสิ้น</span></div>
+    <div class="step-item"><div class="step-num" id="s3">3</div><span class="step-lbl" id="sl3">สำเร็จ</span></div>
   </div>
 
   <!-- NOTICE -->
@@ -479,14 +479,14 @@ body{
 <div id="pageSuccess" class="page-success">
   <div class="success-card">
     <div class="success-icon">✓</div>
-    <h2 class="success-title">บันทึกนัดหมายสำเร็จ</h2>
+    <h2 class="success-title">บ</h2>
     <p class="success-desc">เจ้าหน้าที่รับทราบข้อมูลแล้ว กรุณาแจ้งยืนยันกับแอดมินอีกครั้งเพื่อเริ่มกระบวนการเข้ารับ</p>
     
     <div class="ref-box">
       <div class="ref-stripe"></div>
       <div class="ref-top">
         <div class="ref-main">
-          <div class="ref-label-sm">รหัสนัดรับสินค้า</div>
+          <div class="ref-label-sm">Service Code</div>
           <div class="ref-code" id="refNum">—</div>
         </div>
         <div class="ref-escrow">
@@ -512,7 +512,7 @@ body{
         </div>
         <div class="tl-body">
           <div class="tl-name">บันทึกข้อมูลสำเร็จ</div>
-          <div class="tl-desc">ระบบรับข้อมูลแล้ว · เงิน Escrow คุ้มครองอยู่</div>
+          <div class="tl-desc">ระบบได้รับข้อมูลและเปิดความคุ้มครอง Escrow</div>
         </div>
       </div>
       <div class="tl-step done">
@@ -520,15 +520,15 @@ body{
           <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="3" fill="#b45309"/></svg>
         </div>
         <div class="tl-body">
-          <div class="tl-name wait">รอเจ้าหน้าที่ยืนยัน</div>
-          <div class="tl-desc">กรุณาคัดลอกข้อมูลด้านล่างและแจ้งแอดมิน</div>
+          <div class="tl-name wait">รอการตรวจสอบ</div>
+          <div class="tl-desc">โปรดแจ้งรหัสอ้างอิงให้แอดมินเพื่อยืนยันคิว</div>
         </div>
       </div>
       <div class="tl-step">
         <div class="tl-icon pending"></div>
         <div class="tl-body">
           <div class="tl-name" style="color:var(--muted)">เข้ารับสินค้าตามนัด</div>
-          <div class="tl-desc">ยืนยันตัวตนและยอดรายการ · ขนส่งเข้ารับสินค้าอย่างเป็นทางการ</div>
+          <div class="tl-desc">ยืนยันตัวตนและยอดรายการ ขนส่งเข้ารับสินค้าอย่างเป็นทางการ</div>
         </div>
       </div>
     </div>
@@ -677,8 +677,7 @@ const REGIONS = [
    BOOKING DATA — รอบรถ เมษายน 2569
 ══════════════════════════════════════════ */
 const APRIL = {
-  24:{am:'f',pm:'l',w:'ศุกร์'},
-  25:{am:'l',pm:'a',w:'เสาร์'},26:{am:'a',pm:'a',w:'อาทิตย์'},
+  25:{am:'l',pm:'a',w:'เสาร์'},26:{am:'a',pm:'l',w:'อาทิตย์'},
   27:{am:'a',pm:'l',w:'จันทร์'},28:{am:'l',pm:'a',w:'อังคาร'},
   29:{am:'a',pm:'a',w:'พุธ'},30:{am:'a',pm:'l',w:'พฤหัสบดี'},
 };
